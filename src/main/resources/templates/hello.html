@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+    <head>  
+        <title>Hello World!</title>  
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script src="js/jquery-1.11.1.min.js"></script>
+    </head>  
+    <body>  
+    	<p>
+	      <a href="../home.html" th:href="@{/index}" id="loginBtn">Return to home</a>
+	    </p>
+        <h1 th:inline="text">Hello.word</h1>
+        <p th:text="${hello}">434343</p>
+        <a th:href="@{/login}" th:unless="${session.user != null}">Login</a>
+
+        <div th:switch="${user.id}">
+		  <p th:case="22">User is an administrator</p>
+		  <p th:case="11">User is a manager</p>
+		  <p th:case="*">User is some other thing</p>
+		</div>
+		<p th:text="${user.age}">date</p>
+		<p th:text="'Welcome to our application, ' + ${user.name} + '!'" />
+
+		<table>
+		    <tr>
+		      <th>NAME</th>
+		      <th>PRICE</th>
+		      <th>IN STOCK</th>
+		    </tr>
+		    <tr th:each="prod : ${lists}">
+		      <td th:text="${prod.id}">Onions</td>
+		      <td th:text="${prod.name}">2.41</td>
+		      <td th:text="${prod.age}">yes</td>
+		    </tr>
+	   </table>
+
+    </body>  
+</html>  
+<script>
+$(function() {
+	$("#loginBtn").on("click",function () {
+		var username = $("h1").html();
+		alert(username);
+	});
+});
+</script>

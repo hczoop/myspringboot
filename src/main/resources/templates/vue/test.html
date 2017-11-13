@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <div id="app">
+       <ol>
+		<!--
+		  现在我们为每个 todo-item 提供待办项对象
+		  待办项对象是变量，即其内容可以是动态的。
+		  我们也需要为每个组件提供一个“key”，晚些时候我们会做个解释。
+		-->
+		<todo-item
+		  v-for="item in groceryList"
+		  v-bind:todo="item"
+		  v-bind:key="item.id">
+		</todo-item>
+	  </ol><br/><br>
+		<div v-html="rawHtml"></div>
+		<p>{{ message }}</p>
+		<!--绑定到hml的属性上-->
+		<button v-bind:disabled="isButtonDisabled">Button</button>
+
+		<!--换多个元素，渲染结果不会包含 <template> 元素-->
+		<template v-if="ok">
+			<h1>Title</h1>
+			<p>Paragraph 1</p>
+			<p>Paragraph 2</p>
+		</template>
+
+		<!--v-model双向绑定-->
+		<input v-model.trim="texts" placeholder="edit me" >
+		<p>Message is: {{ texts }}</p>
+
+    </div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+	//自定义的组件
+	Vue.component('todo-item', {
+	  props: ['todo'], //用props定义一个属性todo，来与父单元很好的专递
+	  template: '<li>{{ todo.text }}</li>'
+	})
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            texts: '3434343',
+            rawHtml:'<h1>测试html</h1>',
+            isButtonDisabled:true,
+			ok:false,
+            groceryList: [
+			  { id: 0, text: '蔬菜' },
+			  { id: 1, text: '奶酪' },
+			  { id: 2, text: '随便其他什么人吃的东1西' }
+			]
+        },watch: { //message的值改变后调用
+            'message': function (val, oldVal) {
+                alert('oldVal = ' + oldVal + ' val = ' + val);
+            }
+        }/*,
+        created: function () {//实例被创建之后被调用
+            alert(this.message);
+        }*/
+    })
+
+	//vm.message = 'xingxings'; //可以改变data对象里的属性值,会执行watch
+</script>

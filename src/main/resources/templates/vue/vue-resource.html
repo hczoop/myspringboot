@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>vue router</title>
+</head>
+
+<body>
+    <div id="app">
+        <span>{{result}}</span>
+    </div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        created: function () {
+            //this.initData();
+            this.getUser();
+        },
+        data: {
+            title: '',
+            name: '',
+            secret: '',
+            id: '',
+            desc: '',
+            user:'',
+            result: '结果'
+        },
+        methods:{
+            initData:function(){
+                var self = this;
+                this.$http.get('/hello/get',{params: {name: '测试 vue http'}}).then(response =>{
+                    console.log(response.data.title);
+                    self.title = response.data.title;
+                    self.name = response.data.name;
+                    self.secret = response.data.secret;
+                    self.id = response.data.id;
+                    self.desc = response.data.desc;
+                    var result = self.title + ' ' + self.name + ' ' + self.secret + ' ' + self.id + ' ' + self.desc;
+                    this.result = result;
+                }, response => {
+                    console.log(response)
+                });
+
+            },
+            getUser:function(){
+                var self = this;
+                this.$http.get('/hello/get/121212121/辅导辅导').then(response =>{
+                    self.user = response; //这样就可以在控制台输出 vm.user 查看
+                    console.log(response.body.id);
+                    console.log(response.data.id);
+                    console.log(response.data.name);
+                    console.log(response.data.age);
+                }, response => {
+                    console.log(response)
+                });
+
+            }
+        }
+    });
+
+</script>

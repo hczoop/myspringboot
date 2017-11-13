@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>vue 组件</title>
+</head>
+
+<body>
+    <div id="app">
+		<!--v-model双向绑定-->
+		<input v-model.trim="texts" placeholder="edit me" >
+		<p>Message is: {{ texts }}</p>
+
+
+		<my-component v-bind:message="texts"></my-component>
+
+    </div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+	//自定义的组件，向父组件注册
+	Vue.component('my-component', {
+	    props: ['message'], //用props定义一个属性todo，来与父单元很好的专递
+        template: '<span>{{ message }}</span>'
+	})
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            texts: '3434343'
+
+        }
+    })
+
+</script>

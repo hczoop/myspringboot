@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <!--根据数组数据自动渲染页面-->
+            <li v-for="item in message">{{item}}</li>
+            <li v-for="(todo, index) in todos">{{ todo.text }} == 序号{{index}} </li>
+        </ul>
+        <button @click="add" v-show="isShow">添加数据</button>
+        <button @click="showButton">隐藏按钮</button>
+
+        <br/><br/>
+        <span v-bind:title="time">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+        <p v-if="seen">现在你看到我了</p>
+    </div>
+</body>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: ["第1条数据","第2条数据"],
+            todos: [{ text: '学习 JavaScript' },{ text: '学习 Vue' },{ text: '整个牛项目' }],
+            i:2,
+            time: "新消息",
+            isShow:true,
+            seen: true
+        },
+       /* mounted: function () {
+            alert("文档加载完成后执行，一般用于初始化数据");
+        },*/
+        methods:{
+            //向数组添加一条数据即可
+            add:function(){
+                this.i++
+                this.message.push("第"+this.i+"条数据")
+            },
+            //控制isShow的值即可
+            showButton:function(){
+                this.isShow=false;
+            }
+        },
+        watch: {
+            'message': function (val, oldVal) {
+                console.log('oldVal = ' + oldVal + ' val = ' + val);
+            }
+        }
+    })
+</script>
